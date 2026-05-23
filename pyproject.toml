@@ -1,0 +1,78 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "phionyx-langchain-langgraph"
+version = "0.1.0a1"
+description = "Native LangChain + LangGraph adapters for Phionyx runtime evidence — every chain, tool call, and LLM invocation emits a signed, hash-chained envelope entry."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "AGPL-3.0-or-later"}
+authors = [{name = "Ali Toygar Abak", email = "founder@phionyx.ai"}]
+keywords = [
+    "langchain",
+    "langgraph",
+    "ai-governance",
+    "runtime-evidence",
+    "audit-chain",
+    "agent-observability",
+    "phionyx",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "phionyx-core>=0.4.0",
+    "langchain-core>=0.2.0",
+    "pydantic>=2.0",
+    "cryptography>=42.0",
+]
+
+[project.optional-dependencies]
+langgraph = [
+    "langgraph>=0.0.40",
+]
+test = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "langchain-core>=0.2.0",
+    "langgraph>=0.0.40",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.6",
+    "mypy>=1.10",
+    "langchain-core>=0.2.0",
+    "langgraph>=0.0.40",
+]
+
+[project.urls]
+Homepage = "https://phionyx.ai/runtime-evidence"
+Repository = "https://github.com/halvrenofviryel/phionyx_langchain_langgraph"
+Documentation = "https://phionyx.ai/start"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+phionyx_langchain_langgraph = ["py.typed"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+warn_unused_ignores = true
