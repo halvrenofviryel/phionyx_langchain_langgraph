@@ -4,19 +4,21 @@
 
 Native LangChain + LangGraph adapters for [Phionyx](https://phionyx.ai) runtime evidence. This package surfaces on [phionyx.ai/narrative-coherence](https://phionyx.ai/narrative-coherence) as one of the framework adapters that turn third-party agent runs into reviewer-runnable evidence.
 
+**Where this sits in the Phionyx portfolio:** this is a **framework adapter** with its own version line (v0.1.0a1). It is distinct from the **engine** ([`phionyx-core`](https://pypi.org/project/phionyx-core/), latest v0.7.2 — the deterministic-cognition runtime whose envelope schema this adapter emits), the **self-governance gate** ([`phionyx-pipeline-mcp`](https://github.com/halvrenofviryel/phionyx-pipeline-mcp), stable v0.2.0), and the **Evaluation Standard** ([`phionyx-evaluation-standard`](https://github.com/halvrenofviryel/phionyx-evaluation-standard)). These are separate version namespaces and must not be cross-attributed.
+
 Every LangChain `chain`, `tool`, and `llm` event — and every LangGraph supervisor handoff — is recorded as a signed, hash-chained envelope entry. Third parties can verify the chain offline without trusting the agent's narration.
 
 ## Why
 
 LangChain ships an observability surface (LangSmith, callback handlers, tracing) optimized for *debugging*. It is not optimized for *third-party verification*: a callback log is mutable, unsigned, and the agent's own narration. Phionyx envelopes are immutable, hash-chained, and signed under the operator's Ed25519 key — they survive review even when the agent and the trace store are not trusted.
 
-LangGraph's supervisor patterns track *flow* but do not sign parent → child handoffs. Phionyx's multi-agent envelope schema (planned for `phionyx-core` v0.6.0) adds full multi-agent envelope chains; this adapter is the ingestion surface today.
+LangGraph's supervisor patterns track *flow* but do not sign parent → child handoffs. Phionyx's multi-agent envelope schema (delivered in `phionyx-core` v0.6.0, shipped; latest engine is v0.7.2) adds full multi-agent envelope chains; this adapter is the ingestion surface today.
 
 ## Position vs adjacent tooling
 
 - **vs LangSmith / Langfuse / Helicone**: observability tools record what happened; Phionyx makes what happened *signed, replayable, and third-party-verifiable*. The two layers compose — Phionyx envelope export to OTel / LangSmith is supported.
 - **vs OpenTelemetry GenAI conventions**: OTel conventions remain in active development. Phionyx envelopes are OTel-compatible while preserving stronger evidence semantics (hash chain + signature).
-- **vs A2A (Google Agent2Agent)**: A2A handles agent-to-agent delegation; Phionyx envelopes are designed protocol-agnostic. v1.1 adds an explicit A2A agent-card adapter.
+- **vs A2A (Google Agent2Agent)**: A2A handles agent-to-agent delegation; Phionyx envelopes are designed protocol-agnostic. A future minor release of this adapter (the v1.1 milestone on this package's own roadmap) adds an explicit A2A agent-card adapter.
 
 ## Install
 
@@ -25,7 +27,7 @@ pip install phionyx-langchain-langgraph              # core: LangChain callback 
 pip install "phionyx-langchain-langgraph[langgraph]" # + LangGraph supervisor adapter
 ```
 
-Source: [github.com/halvrenofviryel/phionyx_langchain_langgraph](https://github.com/halvrenofviryel/phionyx_langchain_langgraph).
+Source: [github.com/halvrenofviryel/phionyx-langchain-langgraph](https://github.com/halvrenofviryel/phionyx-langchain-langgraph).
 
 ## 60-second usage
 
@@ -120,7 +122,7 @@ side-channel metadata. This is the multi-agent ingestion surface.
   integration (RunnableLambda, @tool, FakeListLLM, chain composition,
   tool error path, JSONL round-trip).
 
-Roadmap beyond v0.1.0a1: v0.1.0 stable schema lock alongside `phionyx-core` v0.5.0 (live as of 2026-05-24), full multi-agent block wiring in `phionyx-core` v0.6.0.
+Roadmap beyond v0.1.0a1: a v0.1.0 stable release that locks the schema against the current `phionyx-core` engine (latest v0.7.2), building on the multi-agent envelope wiring already shipped in `phionyx-core` v0.6.0.
 
 ## License
 
@@ -130,8 +132,9 @@ AGPL-3.0-or-later. Commercial dual-license available — contact founder@phionyx
 
 - [phionyx.ai/narrative-coherence](https://phionyx.ai/narrative-coherence) — entry pillar this package surfaces under
 - [phionyx.ai/evidence](https://phionyx.ai/evidence) — Evidence Matrix: every load-bearing claim paired with a reviewer-runnable command
-- [`phionyx-core`](https://pypi.org/project/phionyx-core/) (PyPI) — core envelope schema + Ed25519 signing
+- [`phionyx-core`](https://pypi.org/project/phionyx-core/) (PyPI) — the deterministic-cognition **engine** (latest v0.7.2); core envelope schema + Ed25519 signing
+- [`phionyx-evaluation-standard`](https://github.com/halvrenofviryel/phionyx-evaluation-standard) — vendor-neutral **Evaluation Standard** defining the L0–L3 (evaluation maturity), D0–D3 (determinism), and CG-L0…CG-L5 (claim-governance) scales; `phionyx-core` is the reference implementation scoring L3 + D3
 - [`phionyx-mcp-server`](https://github.com/halvrenofviryel/phionyx-mcp-server) — MCP trust boundary companion
-- [`phionyx-pipeline-mcp`](https://github.com/halvrenofviryel/phionyx-pipeline-mcp) — agent self-claim gate companion
+- [`phionyx-pipeline-mcp`](https://github.com/halvrenofviryel/phionyx-pipeline-mcp) — agent self-claim **gate** companion; the component rated on the CG-L0…CG-L5 claim-governance ladder (stable v0.2.0 = CG-L2)
 - [`phionyx-eval-inspect`](https://github.com/halvrenofviryel/phionyx-eval-inspect) — Inspect AI bridge companion
-- [`phionyx-openai-agents`](https://github.com/halvrenofviryel/phionyx_openai_agents) — OpenAI Agents SDK tracing bridge companion
+- [`phionyx-openai-agents`](https://github.com/halvrenofviryel/phionyx-openai-agents) — OpenAI Agents SDK tracing bridge companion
