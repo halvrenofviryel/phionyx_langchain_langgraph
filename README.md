@@ -4,7 +4,7 @@
 
 Native LangChain + LangGraph adapters for [Phionyx](https://phionyx.ai) runtime evidence. This package surfaces on [phionyx.ai/narrative-coherence](https://phionyx.ai/narrative-coherence) as one of the framework adapters that turn third-party agent runs into reviewer-runnable evidence.
 
-**Where this sits in the Phionyx portfolio:** this is a **framework adapter** with its own version line (v0.1.0a1). It is distinct from the **engine** ([`phionyx-core`](https://pypi.org/project/phionyx-core/), latest v0.7.2 — the deterministic-cognition runtime whose envelope schema this adapter emits), the **self-governance gate** ([`phionyx-pipeline-mcp`](https://github.com/halvrenofviryel/phionyx-pipeline-mcp), stable v0.2.0), and the **Evaluation Standard** ([`phionyx-evaluation-standard`](https://github.com/halvrenofviryel/phionyx-evaluation-standard)). These are separate version namespaces and must not be cross-attributed.
+**Where this sits in the Phionyx portfolio:** this is a **framework adapter** with its own version line (v0.1.0a1). It is distinct from the **engine** ([`phionyx-core`](https://pypi.org/project/phionyx-core/), latest v0.7.2 — the deterministic runtime whose envelope schema this adapter emits), the **self-governance gate** ([`phionyx-pipeline-mcp`](https://github.com/halvrenofviryel/phionyx-pipeline-mcp), stable v0.2.0), and the **Evaluation Standard** ([`phionyx-evaluation-standard`](https://github.com/halvrenofviryel/phionyx-evaluation-standard)). These are separate version namespaces and must not be cross-attributed.
 
 Every LangChain `chain`, `tool`, and `llm` event — and every LangGraph supervisor handoff — is recorded as a signed, hash-chained envelope entry. Third parties can verify the chain offline without trusting the agent's narration.
 
@@ -132,7 +132,7 @@ AGPL-3.0-or-later. Commercial dual-license available — contact founder@phionyx
 
 - [phionyx.ai/narrative-coherence](https://phionyx.ai/narrative-coherence) — entry pillar this package surfaces under
 - [phionyx.ai/evidence](https://phionyx.ai/evidence) — Evidence Matrix: every load-bearing claim paired with a reviewer-runnable command
-- [`phionyx-core`](https://pypi.org/project/phionyx-core/) (PyPI) — the deterministic-cognition **engine** (latest v0.7.2); core envelope schema + Ed25519 signing
+- [`phionyx-core`](https://pypi.org/project/phionyx-core/) (PyPI) — the deterministic **engine** (latest v0.7.2); core envelope schema + Ed25519 signing
 - [`phionyx-evaluation-standard`](https://github.com/halvrenofviryel/phionyx-evaluation-standard) — vendor-neutral **Evaluation Standard** defining the L0–L3 (evaluation maturity), D0–D3 (determinism), and CG-L0…CG-L5 (claim-governance) scales; `phionyx-core` is the reference implementation scoring L3 + D3
 - [`phionyx-mcp-server`](https://github.com/halvrenofviryel/phionyx-mcp-server) — MCP trust boundary companion
 - [`phionyx-pipeline-mcp`](https://github.com/halvrenofviryel/phionyx-pipeline-mcp) — agent self-claim **gate** companion; the component rated on the CG-L0…CG-L5 claim-governance ladder (stable v0.2.0 = CG-L2)
